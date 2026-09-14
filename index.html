@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Trailbrake Visuals | Motorsport Photography</title>
+
+<meta name="description" content="Trailbrake Visuals — Motorsport photography from trackside. GT3, endurance, NLS, DTM and automotive photography.">
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+:root {
+    --black:#070809;
+    --dark:#0d0f11;
+    --grey:#8b9095;
+    --white:#f4f4f2;
+    --red:#e21b2d;
+    --line:#24282c;
+}
+
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html {
+    scroll-behavior:smooth;
+}
+
+body {
+    background:var(--black);
+    color:var(--white);
+    font-family:Inter,Arial,sans-serif;
+    overflow-x:hidden;
+}
+
+a {
+    color:inherit;
+    text-decoration:none;
+}
+
+header {
+    height:88px;
+    padding:0 6vw;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid var(--line);
+    position:fixed;
+    top:0;
+    width:100%;
+    background:rgba(7,8,9,.88);
+    backdrop-filter:blur(15px);
+    z-index:100;
+}
+
+.logo {
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo-mark {
+    width:42px;
+    height:42px;
+    border:2px solid var(--white);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:"Space Grotesk";
+    font-weight:700;
+    font-size:15px;
+    transform:skew(-8deg);
+    position:relative;
+}
+
+.logo-mark:after {
+    content:"";
+    position:absolute;
+    width:10px;
+    height:2px;
+    background:var(--red);
+    right:-7px;
+    bottom:7px;
+}
+
+.logo-text {
+    font-family:"Space Grotesk";
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:1.5px;
+    line-height:1.05;
+}
+
+.logo-text span {
+    color:var(--red);
+}
+
+nav {
+    display:flex;
+    gap:38px;
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+}
+
+nav a {
+    transition:.25s;
+}
+
+nav a:hover {
+    color:var(--red);
+}
+
+.header-button {
+    border:1px solid var(--white);
+    padding:12px 18px;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    transition:.25s;
+}
+
+.header-button:hover {
+    background:var(--white);
+    color:var(--black);
+}
+
+.hero {
+    min-height:100vh;
+    padding:160px 7vw 90px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+    gap:7vw;
+    position:relative;
+}
+
+.hero:before {
+    content:"";
+    position:absolute;
+    left:0;
+    top:25%;
+    width:55%;
+    height:1px;
+    background:var(--red);
+    opacity:.5;
+}
+
+.eyebrow {
+    color:var(--grey);
+    font-size:11px;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    margin-bottom:25px;
+}
+
+.eyebrow span {
+    display:inline-block;
+    width:28px;
+    height:2px;
+    background:var(--red);
+    margin-right:10px;
+    vertical-align:middle;
+}
+
+h1,
+h2 {
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:700;
+    letter-spacing:-3px;
+    line-height:.88;
+}
+
+h1 {
+    font-size:clamp(55px,8vw,120px);
+}
+
+h1 i,
+h2 i {
+    color:var(--red);
+    font-style:normal;
+}
+
+.hero-text {
+    color:#aeb2b5;
+    max-width:480px;
+    line-height:1.7;
+    margin-top:35px;
+    font-size:15px;
+}
+
+.actions {
+    display:flex;
+    gap:15px;
+    margin-top:40px;
+}
+
+.button {
+    padding:16px 23px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    font-size:11px;
+    font-weight:700;
+}
+
+.primary {
+    background:var(--red);
+}
+
+.secondary {
+    border:1px solid #444;
+}
+
+.hero-image {
+    height:600px;
+    position:relative;
+    overflow:hidden;
+    transform:skewY(-2deg);
+}
+
+.hero-image img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transform:skewY(2deg) scale(1.05);
+    filter:saturate(.85) contrast(1.1);
+}
+
+.hero-image:after {
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(90deg,transparent 60%,rgba(226,27,45,.18));
+    pointer-events:none;
+}
+
+.hero-label {
+    position:absolute;
+    right:0;
+    bottom:-35px;
+    font-size:11px;
+    letter-spacing:2px;
+    color:var(--grey);
+    transform:skewY(2deg);
+}
+
+.section {
+    padding:130px 7vw;
+}
+
+.section-header {
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    gap:40px;
+    margin-bottom:60px;
+}
+
+h2 {
+    font-size:clamp(50px,7vw,100px);
+}
+
+.section-description {
+    max-width:400px;
+    color:var(--grey);
+    line-height:1.7;
+    font-size:14px;
+}
+
+.ticker {
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:20px 7vw;
+    display:flex;
+    justify-content:space-between;
+    color:#777;
+    font-size:11px;
+    letter-spacing:2px;
+}
+
+.ticker strong {
+    color:var(--white);
+}
+
+.gallery {
+    display:grid;
+    grid-template-columns:1fr 1.4fr;
+    gap:18px;
+}
+
+.gallery-item {
+    height:430px;
+    position:relative;
+    overflow:hidden;
+    background:#111;
+}
+
+.gallery-item.large {
+    height:600px;
+    grid-row:span 2;
+}
+
+.gallery-item img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.6s;
+    filter:grayscale(.1);
+}
+
+.gallery-item:hover img {
+    transform:scale(1.05);
+}
+
+.gallery-info {
+    position:absolute;
+    left:20px;
+    right:20px;
+    bottom:20px;
+    display:flex;
+    justify-content:space-between;
+    font-size:10px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    text-shadow:0 2px 10px #000;
+}
+
+.about {
+    background:var(--dark);
+    display:grid;
+    grid-template-columns:.3fr 1fr 1fr;
+    gap:70px;
+    align-items:center;
+}
+
+.about-number {
+    font-family:"Space Grotesk";
+    font-size:80px;
+    color:#292d31;
+}
+
+.about-text {
+    max-width:570px;
+}
+
+.about-text p {
+    color:#a5aaae;
+    line-height:1.8;
+    font-size:15px;
+    margin-top:25px;
+}
+
+.stats {
+    display:flex;
+    gap:45px;
+    margin-top:45px;
+}
+
+.stat strong {
+    display:block;
+    font-family:"Space Grotesk";
+    font-size:24px;
+}
+
+.stat span {
+    color:var(--grey);
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.about-photo {
+    height:520px;
+    overflow:hidden;
+}
+
+.about-photo img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.services-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    border-top:1px solid var(--line);
+}
+
+.service {
+    padding:45px 30px 30px 0;
+    border-right:1px solid var(--line);
+}
+
+.service:not(:first-child) {
+    padding-left:30px;
+}
+
+.service-number {
+    color:var(--red);
+    font-size:11px;
+    letter-spacing:2px;
+}
+
+.service h3 {
+    font-family:"Space Grotesk";
+    font-size:25px;
+    margin:45px 0 18px;
+}
+
+.service p {
+    color:var(--grey);
+    font-size:13px;
+    line-height:1.7;
+    max-width:300px;
+}
+
+.contact {
+    padding:160px 7vw;
+    background:
+        linear-gradient(120deg,rgba(226,27,45,.08),transparent 40%),
+        var(--dark);
+    text-align:center;
+    border-top:1px solid var(--line);
+}
+
+.contact h2 {
+    font-size:clamp(60px,9vw,130px);
+}
+
+.contact p:not(.eyebrow) {
+    color:var(--grey);
+    margin:35px auto;
+}
+
+.email {
+    display:inline-block;
+    font-family:"Space Grotesk";
+    font-size:clamp(18px,3vw,30px);
+    border-bottom:2px solid var(--red);
+    padding-bottom:8px;
+}
+
+.socials {
+    margin-top:55px;
+    display:flex;
+    justify-content:center;
+    gap:35px;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+}
+
+.socials a:hover {
+    color:var(--red);
+}
+
+footer {
+    padding:25px 7vw;
+    display:flex;
+    justify-content:space-between;
+    color:#656a6e;
+    font-size:10px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    border-top:1px solid var(--line);
+}
+
+@media(max-width:800px) {
+
+    header {
+        height:72px;
+        padding:0 5vw;
+    }
+
+    nav {
+        display:none;
+    }
+
+    .header-button {
+        display:none;
+    }
+
+    .hero {
+        grid-template-columns:1fr;
+        padding:125px 6vw 70px;
+        gap:50px;
+    }
+
+    .hero-image {
+        height:420px;
+    }
+
+    h1 {
+        font-size:18vw;
+    }
+
+    .section {
+        padding:90px 6vw;
+    }
+
+    .section-header {
+        display:block;
+    }
+
+    .section-description {
+        margin-top:30px;
+    }
+
+    .ticker {
+        overflow:hidden;
+        gap:25px;
+        white-space:nowrap;
+    }
+
+    .gallery {
+        grid-template-columns:1fr;
+    }
+
+    .gallery-item,
+    .gallery-item.large {
+        height:420px;
+        grid-row:auto;
+    }
+
+    .about {
+        grid-template-columns:1fr;
+        gap:35px;
+    }
+
+    .about-number {
+        display:none;
+    }
+
+    .about-photo {
+        height:400px;
+    }
+
+    .services-grid {
+        grid-template-columns:1fr;
+    }
+
+    .service,
+    .service:not(:first-child) {
+        padding:35px 0;
+        border-right:0;
+        border-bottom:1px solid var(--line);
+    }
+
+    .service h3 {
+        margin-top:25px;
+    }
+
+    .stats {
+        gap:25px;
+        flex-wrap:wrap;
+    }
+
+    .contact {
+        padding:110px 6vw;
+    }
+
+    footer {
+        flex-direction:column;
+        gap:12px;
+        text-align:center;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<a href="#" class="logo">
+<div class="logo-mark">TB</div>
+<div class="logo-text">
+TRAILBRAKE<br>
+<span>VISUALS</span>
+</div>
+</a>
+
+<nav>
+<a href="#work">Work</a>
+<a href="#about">About</a>
+<a href="#services">Services</a>
+<a href="#contact">Contact</a>
+</nav>
+
+<a class="header-button" href="mailto:trailbrakevisuals@gmail.com">
+Book a shoot ↗
+</a>
+
+</header>
+
+
+<main>
+
+<section class="hero">
+
+<div>
+
+<p class="eyebrow">
+<span></span>
+Motorsport Photography / Belgium
+</p>
+
+<h1>
+FIND THE<br>
+<i>APEX.</i><br>
+FRAME THE<br>
+MOMENT.
+</h1>
+
+<p class="hero-text">
+Trackside photography built around speed, atmosphere and the details that make motorsport unforgettable.
+</p>
+
+<div class="actions">
+
+<a href="#work" class="button primary">
+Explore the work ↓
+</a>
+
+<a href="https://www.instagram.com/trailbrakevisuals"
+target="_blank"
+class="button secondary">
+Instagram ↗
+</a>
+
+</div>
+
+</div>
+
+
+<div>
+
+<div class="hero-image">
+
+<img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=85"
+alt="Performance car">
+
+</div>
+
+<div class="hero-label">
+01 / TRACKSIDE
+</div>
+
+</div>
+
+</section>
+
+
+<div class="ticker">
+
+<span><strong>GT3</strong></span>
+<span>///</span>
+<span>ENDURANCE</span>
+<span>///</span>
+<span><strong>NLS</strong></span>
+<span>///</span>
+<span>DTM</span>
+<span>///</span>
+<span>TRACK DAYS</span>
+<span>///</span>
+<span>RACING</span>
+
+</div>
+
+
+<section id="work" class="section">
+
+<div class="section-header">
+
+<div>
+
+<p class="eyebrow">
+<span></span>
+Selected Work
+</p>
+
+<h2>
+RACE.<br>
+<i>REPLAYED.</i>
+</h2>
+
+</div>
+
+<p class="section-description">
+A growing collection of trackside moments from circuits across Europe — from the Nürburgring to the Alpine passes.
+</p>
+
+</div>
+
+
+<div class="gallery">
+
+<div class="gallery-item large">
+
+<img src="https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=1400&q=85"
+alt="Race car">
+
+<div class="gallery-info">
+<span>NLS / Nürburgring</span>
+<span>01</span>
+</div>
+
+</div>
+
+
+<div class="gallery-item">
+
+<img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1400&q=85"
+alt="Sports car">
+
+<div class="gallery-info">
+<span>GT3 / Motion</span>
+<span>02</span>
+</div>
+
+</div>
+
+
+<div class="gallery-item">
+
+<img src="https://images.unsplash.com/photo-1504215680853-026ed2a45def?auto=format&fit=crop&w=1400&q=85"
+alt="Performance car">
+
+<div class="gallery-info">
+<span>Trackside / Detail</span>
+<span>03</span>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="about" class="about section">
+
+<div class="about-number">
+02
+</div>
+
+<div class="about-text">
+
+<p class="eyebrow">
+<span></span>
+About Trailbrake
+</p>
+
+<h2>
+BUILT AROUND<br>
+<i>THE PASSION.</i>
+</h2>
+
+<p>
+Trailbrake Visuals is an independent motorsport photography project focused on capturing the intensity, character and atmosphere of racing.
+</p>
+
+<p>
+From club racing and endurance to major GT events, the goal is simple: deliver images that feel as fast as the cars looked.
+</p>
+
+<div class="stats">
+
+<div class="stat">
+<strong>BE</strong>
+<span>Based in Belgium</span>
+</div>
+
+<div class="stat">
+<strong>GT</strong>
+<span>Motorsport Focus</span>
+</div>
+
+<div class="stat">
+<strong>EU</strong>
+<span>Available Europe-wide</span>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="about-photo">
+
+<img src="https://images.unsplash.com/photo-1525609004556-c46c7cf8c2e5?auto=format&fit=crop&w=1200&q=85"
+alt="Sports car">
+
+</div>
+
+</section>
+
+
+<section id="services" class="section">
+
+<div class="section-header">
+
+<div>
+
+<p class="eyebrow">
+<span></span>
+What I Cover
+</p>
+
+<h2>
+FROM GRID<br>
+<i>TO FLAG.</i>
+</h2>
+
+</div>
+
+</div>
+
+
+<div class="services-grid">
+
+<div class="service">
+
+<div class="service-number">01</div>
+
+<h3>Race Weekends</h3>
+
+<p>
+Trackside coverage for race teams, drivers, sponsors and media.
+</p>
+
+</div>
+
+
+<div class="service">
+
+<div class="service-number">02</div>
+
+<h3>Automotive</h3>
+
+<p>
+Road, performance and lifestyle imagery with a motorsport-inspired edge.
+</p>
+
+</div>
+
+
+<div class="service">
+
+<div class="service-number">03</div>
+
+<h3>Social Content</h3>
+
+<p>
+Fast-turnaround images and visual content made for modern platforms.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="contact" class="contact">
+
+<p class="eyebrow">
+<span></span>
+Get In Touch
+</p>
+
+<h2>
+HAVE A RACE<br>
+TO <i>COVER?</i>
+</h2>
+
+<p>
+Let's make something worth looking back at.
+</p>
+
+<a href="mailto:trailbrakevisuals@gmail.com" class="email">
+trailbrakevisuals@gmail.com ↗
+</a>
+
+<div class="socials">
+
+<a href="https://www.instagram.com/trailbrakevisuals"
+target="_blank">
+Instagram
+</a>
+
+<a href="https://www.tiktok.com/@trailbrakevisuals"
+target="_blank">
+TikTok
+</a>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+<span>
+© 2026 Trailbrake Visuals
+</span>
+
+<span>
+Motorsport Photography / Belgium
+</span>
+
+<a href="#">
+Back to top ↑
+</a>
+
+</footer>
+
+</body>
+</html>
