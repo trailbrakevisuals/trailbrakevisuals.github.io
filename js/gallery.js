@@ -13,7 +13,9 @@
 
 
     /*
+     * =====================================================
      * LOAD PHOTOS
+     * =====================================================
      */
 
     async function loadPhotos() {
@@ -24,17 +26,21 @@
                 await fetch(REPO_API);
 
             if (!response.ok) {
+
                 throw new Error(
                     "Unable to load photo collection."
                 );
+
             }
 
             const files =
                 await response.json();
 
+
             const photos =
                 files
-                    .filter(file => {
+
+                    .filter(function (file) {
 
                         return (
                             file.type === "file" &&
@@ -44,7 +50,14 @@
                         );
 
                     })
-                    .sort((a, b) => {
+
+
+                    /*
+                     * Keep the Work page in a
+                     * predictable natural order.
+                     */
+
+                    .sort(function (a, b) {
 
                         return a.name.localeCompare(
                             b.name,
@@ -56,10 +69,13 @@
                         );
 
                     })
-                    .map(file => {
+
+
+                    .map(function (file) {
 
                         const data =
                             metadata.photos[file.name] || {};
+
 
                         return {
 
@@ -108,7 +124,9 @@
 
                     });
 
+
             return photos;
+
 
         } catch (error) {
 
@@ -125,79 +143,249 @@
 
 
     /*
+     * =====================================================
      * SHUFFLE
-     *
-     * Used only for homepage featured photography.
-     * The main Work gallery keeps its normal order.
+     * =====================================================
      */
 
     function shuffle(array) {
 
-        return [...array]
-            .sort(() => Math.random() - 0.5);
+        const shuffled =
+            [...array];
+
+
+        for (
+            let i = shuffled.length - 1;
+            i > 0;
+            i--
+        ) {
+
+            const j =
+                Math.floor(
+                    Math.random() * (i + 1)
+                );
+
+
+            [
+                shuffled[i],
+                shuffled[j]
+            ] = [
+                shuffled[j],
+                shuffled[i]
+            ];
+
+        }
+
+
+        return shuffled;
 
     }
 
 
     /*
-     * FEATURED IMAGE SELECTION
+     * =====================================================
+     * GET FEATURED PHOTOS
+     *
+     * The selected four photos are stored in memory
+     * for the current page load.
+     *
+     * The previous selection is stored in localStorage
+     * so a reload avoids immediately showing the same
+     * four photographs again.
+     * =====================================================
      */
 
     function getFeaturedPhotos(photos) {
 
+        if (!photos.length) {
+            return [];
+        }
+
+
         const manual =
-            photos.filter(
-                photo => photo.featured
-            );
+            photos.filter(function (photo) {
+
+                return photo.featured === true;
+
+            });
+
 
         const pool =
             manual.length >= 4
                 ? manual
                 : photos;
 
-        return shuffle(pool).slice(0, 4);
+
+        let previous = [];
+
+
+        try {
+
+            previous =
+                JSON.parse(
+                    localStorage.getItem(
+                        "trailbrakeFeaturedPhotos"
+                    )
+                ) || [];
+
+
+        } catch (error) {
+
+            previous = [];
+
+        }
+
+
+        const previousSet =
+            new Set(previous);
+
+
+        /*
+         * First try to completely avoid the
+         * previous homepage selection.
+         */
+
+        let fresh =
+            pool.filter(function (photo) {
+
+                return !previousSet.has(
+                    photo.filename
+                );
+
+            });
+
+
+        /*
+         * If there are at least four unused
+         * photographs, use only those.
+         */
+
+        if (fresh.length >= 4) {
+
+            fresh =
+                shuffle(fresh);
+
+
+        } else {
+
+            /*
+             * Not enough unused photos remain.
+             *
+             * Use every unused photo first,
+             * then fill the remaining positions
+             * from the rest of the collection.
+             */
+
+            fresh =
+                shuffle(fresh);
+
+
+            const usedNow =
+                new Set(
+                    fresh.map(function (photo) {
+
+                        return photo.filename;
+
+                    })
+                );
+
+
+            const remaining =
+                pool.filter(function (photo) {
+
+                    return !usedNow.has(
+                        photo.filename
+                    );
+
+                });
+
+
+            fresh =
+                fresh.concat(
+                    shuffle(remaining)
+                );
+
+        }
+
+
+        const selected =
+            fresh.slice(0, 4);
+
+
+        /*
+         * Save this selection for the next reload.
+         */
+
+        try {
+
+            localStorage.setItem(
+                "trailbrakeFeaturedPhotos",
+                JSON.stringify(
+                    selected.map(function (photo) {
+
+                        return photo.filename;
+
+                    })
+                )
+            );
+
+
+        } catch (error) {
+
+            console.warn(
+                "Unable to save featured photo history."
+            );
+
+        }
+
+
+        return selected;
 
     }
 
 
     /*
+     * =====================================================
      * HERO
+     * =====================================================
      */
 
-    function renderHero(photos) {
+    function renderHero(photo) {
 
         const container =
             document.getElementById(
                 "hero-image"
             );
 
+
         if (
             !container ||
-            !photos.length
+            !photo
         ) {
+
             return;
+
         }
 
-        const selected =
-            getFeaturedPhotos(photos)[0];
-
-        if (!selected) {
-            return;
-        }
 
         container.innerHTML = "";
 
+
         const image =
-            document.createElement("img");
+            document.createElement(
+                "img"
+            );
+
 
         image.src =
-            selected.src;
+            photo.src;
 
         image.alt =
-            selected.alt;
+            photo.alt;
 
         image.loading =
             "eager";
+
 
         container.appendChild(
             image
@@ -207,7 +395,9 @@
 
 
     /*
+     * =====================================================
      * FEATURED GRID
+     * =====================================================
      */
 
     function renderFeatured(photos) {
@@ -217,30 +407,36 @@
                 "featured-grid"
             );
 
+
         if (!container) {
+
             return;
+
         }
 
-        const featured =
-            getFeaturedPhotos(photos);
 
         container.innerHTML = "";
 
-        featured.forEach(
-            (photo, index) => {
+
+        photos.forEach(
+            function (photo, index) {
+
 
                 const item =
                     document.createElement(
                         "article"
                     );
 
+
                 item.className =
                     "featured-item";
+
 
                 const image =
                     document.createElement(
                         "img"
                     );
+
 
                 image.src =
                     photo.src;
@@ -259,6 +455,7 @@
                         "div"
                     );
 
+
                 overlay.className =
                     "featured-overlay";
 
@@ -268,8 +465,10 @@
                         "div"
                     );
 
+
                 label.className =
                     "featured-label";
+
 
                 label.textContent =
                     "NLS 8 & 9";
@@ -280,8 +479,10 @@
                         "div"
                     );
 
+
                 title.className =
                     "featured-title";
+
 
                 title.textContent =
                     photo.title ||
@@ -295,6 +496,7 @@
                 overlay.appendChild(
                     title
                 );
+
 
                 item.appendChild(
                     image
@@ -334,7 +536,9 @@
 
 
     /*
+     * =====================================================
      * WORK PAGE GALLERY
+     * =====================================================
      */
 
     function renderGallery(photos) {
@@ -344,19 +548,26 @@
                 "gallery"
             );
 
+
         if (!container) {
+
             return;
+
         }
+
 
         container.innerHTML = "";
 
+
         photos.forEach(
-            photo => {
+            function (photo) {
+
 
                 const item =
                     document.createElement(
                         "article"
                     );
+
 
                 item.className =
                     "gallery-item";
@@ -366,6 +577,7 @@
                     document.createElement(
                         "img"
                     );
+
 
                 image.src =
                     photo.src;
@@ -382,6 +594,7 @@
                         "div"
                     );
 
+
                 info.className =
                     "gallery-item-info";
 
@@ -390,6 +603,7 @@
                     document.createElement(
                         "strong"
                     );
+
 
                 title.textContent =
                     photo.title ||
@@ -400,6 +614,7 @@
                     document.createElement(
                         "span"
                     );
+
 
                 const detailParts = [];
 
@@ -412,6 +627,7 @@
 
                 }
 
+
                 if (photo.team) {
 
                     detailParts.push(
@@ -420,6 +636,7 @@
 
                 }
 
+
                 if (photo.car) {
 
                     detailParts.push(
@@ -427,6 +644,7 @@
                     );
 
                 }
+
 
                 if (photo.event) {
 
@@ -450,6 +668,7 @@
                 info.appendChild(
                     details
                 );
+
 
                 item.appendChild(
                     image
@@ -489,42 +708,47 @@
 
 
     /*
-     * ABOUT PHOTO
+     * =====================================================
+     * ABOUT PREVIEW
+     * =====================================================
      */
 
-    function renderAboutPhoto(photos) {
+    function renderAboutPhoto(photo) {
 
         const container =
             document.getElementById(
                 "about-preview-photo"
             );
 
+
         if (
             !container ||
-            !photos.length
+            !photo
         ) {
+
             return;
+
         }
 
-        const selected =
-            getFeaturedPhotos(photos)[1] ||
-            photos[0];
 
         container.innerHTML = "";
+
 
         const image =
             document.createElement(
                 "img"
             );
 
+
         image.src =
-            selected.src;
+            photo.src;
 
         image.alt =
-            selected.alt;
+            photo.alt;
 
         image.loading =
             "lazy";
+
 
         container.appendChild(
             image
@@ -534,42 +758,47 @@
 
 
     /*
+     * =====================================================
      * EVENT IMAGE
+     * =====================================================
      */
 
-    function renderEventImage(photos) {
+    function renderEventImage(photo) {
 
         const container =
             document.querySelector(
                 ".event-card-background"
             );
 
+
         if (
             !container ||
-            !photos.length
+            !photo
         ) {
+
             return;
+
         }
 
-        const selected =
-            getFeaturedPhotos(photos)[2] ||
-            photos[0];
 
         container.innerHTML = "";
+
 
         const image =
             document.createElement(
                 "img"
             );
 
+
         image.src =
-            selected.src;
+            photo.src;
 
         image.alt =
-            selected.alt;
+            photo.alt;
 
         image.loading =
             "lazy";
+
 
         container.appendChild(
             image
@@ -579,7 +808,9 @@
 
 
     /*
+     * =====================================================
      * FILTERS
+     * =====================================================
      */
 
     function setupFilters(photos) {
@@ -589,23 +820,33 @@
                 ".filter-button"
             );
 
+
         if (!buttons.length) {
+
             return;
+
         }
 
+
         buttons.forEach(
-            button => {
+            function (button) {
+
 
                 button.addEventListener(
                     "click",
                     function () {
 
+
                         buttons.forEach(
-                            item =>
+                            function (item) {
+
                                 item.classList.remove(
                                     "active"
-                                )
+                                );
+
+                            }
                         );
+
 
                         button.classList.add(
                             "active"
@@ -627,9 +868,14 @@
 
                             filtered =
                                 photos.filter(
-                                    photo =>
-                                        photo.event ===
-                                        filter
+                                    function (photo) {
+
+                                        return (
+                                            photo.event ===
+                                            filter
+                                        );
+
+                                    }
                                 );
 
                         }
@@ -649,7 +895,9 @@
 
 
     /*
+     * =====================================================
      * MOBILE MENU
+     * =====================================================
      */
 
     function setupMobileMenu() {
@@ -659,21 +907,26 @@
                 ".mobile-menu-button"
             );
 
+
         const header =
             document.querySelector(
                 ".site-header"
             );
+
 
         const menu =
             document.querySelector(
                 ".mobile-menu"
             );
 
+
         if (
             !button ||
             !header
         ) {
+
             return;
+
         }
 
 
@@ -681,9 +934,11 @@
             "click",
             function () {
 
+
                 header.classList.toggle(
                     "mobile-open"
                 );
+
 
                 if (menu) {
 
@@ -713,19 +968,23 @@
 
             menu.querySelectorAll("a")
                 .forEach(
-                    link => {
+                    function (link) {
+
 
                         link.addEventListener(
                             "click",
                             function () {
 
+
                                 header.classList.remove(
                                     "mobile-open"
                                 );
 
+
                                 menu.classList.remove(
                                     "open"
                                 );
+
 
                                 button.setAttribute(
                                     "aria-expanded",
@@ -744,7 +1003,9 @@
 
 
     /*
+     * =====================================================
      * CURRENT YEAR
+     * =====================================================
      */
 
     function setYear() {
@@ -754,7 +1015,7 @@
                 "[data-current-year]"
             )
             .forEach(
-                element => {
+                function (element) {
 
                     element.textContent =
                         new Date()
@@ -767,7 +1028,9 @@
 
 
     /*
+     * =====================================================
      * INITIALISE
+     * =====================================================
      */
 
     async function init() {
@@ -792,25 +1055,81 @@
         }
 
 
+        /*
+         * Select the homepage set ONCE.
+         *
+         * Everything on the homepage that uses
+         * featured photography can now reference
+         * this same selection.
+         */
+
+        const featuredPhotos =
+            getFeaturedPhotos(
+                photos
+            );
+
+
+        /*
+         * HERO
+         *
+         * First selected photograph.
+         */
+
         renderHero(
-            photos
+            featuredPhotos[0] ||
+            photos[0]
         );
 
+
+        /*
+         * FEATURED GRID
+         *
+         * Same four selected photographs.
+         */
+
         renderFeatured(
-            photos
+            featuredPhotos
         );
+
+
+        /*
+         * WORK PAGE
+         *
+         * Original natural order.
+         */
 
         renderGallery(
             photos
         );
 
+
+        /*
+         * ABOUT PREVIEW
+         *
+         * Use another photograph from the
+         * current featured selection.
+         */
+
         renderAboutPhoto(
-            photos
+            featuredPhotos[1] ||
+            featuredPhotos[0] ||
+            photos[0]
         );
 
+
+        /*
+         * EVENT PREVIEW
+         *
+         * Use another photograph from the
+         * current featured selection.
+         */
+
         renderEventImage(
-            photos
+            featuredPhotos[2] ||
+            featuredPhotos[0] ||
+            photos[0]
         );
+
 
         setupFilters(
             photos
@@ -818,6 +1137,12 @@
 
     }
 
+
+    /*
+     * =====================================================
+     * START
+     * =====================================================
+     */
 
     if (
         document.readyState ===
