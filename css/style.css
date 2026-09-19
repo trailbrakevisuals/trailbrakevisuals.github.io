@@ -1787,5 +1787,652 @@ span:last-child {
     span:last-child {
         top: 20px;
     }
+/* =========================================================
+   TRAILBRAKE V2 COMPONENT RESTORATION
+   ========================================================= */
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.brand img {
+    width: 76px;
+    height: 76px;
+
+    object-fit: cover;
+
+    border-radius: 14px;
+
+    background: #050505;
+
+    border: 1px solid
+        rgba(255, 255, 255, 0.10);
+
+    box-shadow:
+        0 10px 35px
+        rgba(0, 0, 0, 0.45);
+
+    padding: 0;
+}
+
+.footer-brand img,
+.footer-logo {
+    border-radius: 14px;
+}
+
+
+/* =========================================================
+   SERVICES PAGE
+   ========================================================= */
+
+.services-page-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 16px;
+
+    margin-top: 45px;
+}
+
+.services-page-card {
+    position: relative;
+
+    min-height: 250px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    overflow: hidden;
+
+    padding: 30px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.13);
+
+    border-radius: 20px;
+
+    background:
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(225, 6, 0, 0.10),
+            transparent 35%
+        ),
+        rgba(255, 255, 255, 0.045);
+
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+
+    box-shadow:
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.045),
+        0 18px 50px
+        rgba(0, 0, 0, 0.18);
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        background 0.3s ease;
+}
+
+.services-page-card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    right: -80px;
+    bottom: -100px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(225, 6, 0, 0.08);
+
+    filter: blur(35px);
+
+    pointer-events: none;
+}
+
+.services-page-card:hover {
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(255, 255, 255, 0.22);
+
+    background:
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(225, 6, 0, 0.14),
+            transparent 38%
+        ),
+        rgba(255, 255, 255, 0.06);
+}
+
+.services-page-card .number {
+    color: var(--red);
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.2em;
+}
+
+.services-page-card h2 {
+    margin-top: 45px;
+
+    font-size: 25px;
+
+    line-height: 1.05;
+
+    letter-spacing: -0.025em;
+}
+
+.services-page-card p {
+    margin-top: 15px;
+
+    color: var(--grey);
+
+    font-size: 14px;
+
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   ABOUT PAGE
+   ========================================================= */
+
+.about-main {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 0.85fr)
+        minmax(0, 1.15fr);
+
+    gap: 70px;
+
+    align-items: start;
+}
+
+.about-main-photo {
+    position: relative;
+
+    overflow: hidden;
+
+    min-height: 620px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255, 255, 255, 0.04);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.12);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.about-main-photo img {
+    width: 100%;
+    height: 100%;
+
+    min-height: 620px;
+
+    object-fit: cover;
+}
+
+.about-main-copy {
+    padding-top: 15px;
+}
+
+.about-main-copy h2 {
+    margin-top: 18px;
+
+    max-width: 720px;
+
+    font-size:
+        clamp(
+            38px,
+            5vw,
+            68px
+        );
+
+    line-height: 0.98;
+
+    letter-spacing: -0.045em;
+}
+
+.about-main-copy h2 span {
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            0.40
+        );
+}
+
+.about-main-copy p {
+    max-width: 680px;
+
+    margin-top: 25px;
+
+    color: var(--grey);
+
+    font-size: 16px;
+
+    line-height: 1.75;
+}
+
+.about-main-copy p:first-of-type {
+    color: var(--white);
+
+    font-size: 21px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   ABOUT PHILOSOPHY
+   ========================================================= */
+
+.philosophy-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 16px;
+
+    margin-top: 70px;
+}
+
+.philosophy-card {
+    min-height: 230px;
+
+    padding: 30px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.12);
+
+    border-radius: 18px;
+
+    background:
+        rgba(255, 255, 255, 0.04);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.philosophy-card h3 {
+    margin-top: 42px;
+
+    font-size: 25px;
+
+    letter-spacing: -0.025em;
+}
+
+.philosophy-card p {
+    margin-top: 15px;
+
+    color: var(--grey);
+
+    font-size: 14px;
+
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   CONTACT PAGE
+   ========================================================= */
+
+.contact-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.05fr)
+        minmax(300px, 0.95fr);
+
+    gap: 70px;
+
+    align-items: center;
+
+    padding:
+        65px 60px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.12);
+
+    border-radius: 22px;
+
+    background:
+        radial-gradient(
+            circle at 95% 5%,
+            rgba(225, 6, 0, 0.13),
+            transparent 38%
+        ),
+        rgba(255, 255, 255, 0.04);
+
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+
+    box-shadow:
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.04);
+}
+
+.contact-main h2 {
+    max-width: 650px;
+
+    margin-top: 18px;
+
+    font-size:
+        clamp(
+            40px,
+            5vw,
+            66px
+        );
+
+    line-height: 0.98;
+
+    letter-spacing: -0.045em;
+}
+
+.contact-main h2 span {
+    display: block;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            0.42
+        );
+}
+
+.contact-main > p {
+    max-width: 580px;
+
+    margin-top: 25px;
+
+    color: var(--grey);
+
+    font-size: 16px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   CONTACT BUTTONS
+   ========================================================= */
+
+.contact-links {
+    display: grid;
+
+    gap: 12px;
+}
+
+.contact-link {
+    min-height: 76px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding:
+        0 24px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.12);
+
+    border-radius: 15px;
+
+    background:
+        rgba(255, 255, 255, 0.045);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
+}
+
+.contact-link:hover {
+    transform:
+        translateX(4px);
+
+    border-color:
+        rgba(255, 255, 255, 0.24);
+
+    background:
+        rgba(255, 255, 255, 0.07);
+}
+
+.contact-link strong {
+    color: var(--white);
+
+    font-size: 11px;
+
+    letter-spacing: 0.16em;
+
+    text-transform: uppercase;
+}
+
+.contact-link span {
+    color: var(--grey);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   MOBILE CONTACT
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .brand img {
+        width: 64px;
+        height: 64px;
+
+        border-radius: 13px;
+    }
+
+
+    /* SERVICES */
+
+    .services-page-grid {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+
+        margin-top: 32px;
+    }
+
+    .services-page-card {
+        min-height: 210px;
+
+        padding: 25px;
+
+        border-radius: 18px;
+    }
+
+    .services-page-card h2 {
+        margin-top: 35px;
+
+        font-size: 24px;
+    }
+
+    .services-page-card p {
+        font-size: 14px;
+    }
+
+
+    /* ABOUT */
+
+    .about-main {
+        grid-template-columns: 1fr;
+
+        gap: 35px;
+    }
+
+    .about-main-photo {
+        min-height: 420px;
+
+        border-radius: 18px;
+    }
+
+    .about-main-photo img {
+        min-height: 420px;
+    }
+
+    .about-main-copy {
+        padding-top: 0;
+    }
+
+    .about-main-copy h2 {
+        font-size:
+            clamp(
+                38px,
+                11vw,
+                56px
+            );
+    }
+
+    .about-main-copy p {
+        font-size: 15px;
+
+        line-height: 1.7;
+    }
+
+    .about-main-copy p:first-of-type {
+        font-size: 19px;
+    }
+
+
+    /* PHILOSOPHY */
+
+    .philosophy-grid {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+
+        margin-top: 45px;
+    }
+
+    .philosophy-card {
+        min-height: 190px;
+
+        padding: 25px;
+
+        border-radius: 17px;
+    }
+
+    .philosophy-card h3 {
+        margin-top: 30px;
+    }
+
+
+    /* CONTACT */
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+
+        gap: 35px;
+
+        padding:
+            38px 24px;
+
+        border-radius: 19px;
+    }
+
+    .contact-main h2 {
+        font-size:
+            clamp(
+                38px,
+                10vw,
+                54px
+            );
+    }
+
+    .contact-main > p {
+        font-size: 15px;
+    }
+
+    .contact-links {
+        gap: 10px;
+    }
+
+    .contact-link {
+        min-height: 68px;
+
+        padding:
+            0 20px;
+
+        border-radius: 14px;
+    }
+
+    .contact-link strong {
+        font-size: 10px;
+    }
+
+    .contact-link span {
+        display: none;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .brand img {
+        width: 60px;
+        height: 60px;
+
+        border-radius: 12px;
+    }
+
+    .services-page-card {
+        min-height: 205px;
+
+        padding: 23px;
+    }
+
+    .about-main-photo,
+    .about-main-photo img {
+        min-height: 360px;
+    }
+
+    .contact-grid {
+        padding:
+            32px 20px;
+    }
 
 }
