@@ -125,6 +125,21 @@
 
 
     /*
+     * SHUFFLE
+     *
+     * Used only for homepage featured photography.
+     * The main Work gallery keeps its normal order.
+     */
+
+    function shuffle(array) {
+
+        return [...array]
+            .sort(() => Math.random() - 0.5);
+
+    }
+
+
+    /*
      * FEATURED IMAGE SELECTION
      */
 
@@ -135,19 +150,12 @@
                 photo => photo.featured
             );
 
-        if (manual.length >= 4) {
+        const pool =
+            manual.length >= 4
+                ? manual
+                : photos;
 
-            return manual.slice(0, 4);
-
-        }
-
-        const sorted =
-            [...photos].sort(
-                (a, b) =>
-                    b.quality - a.quality
-            );
-
-        return sorted.slice(0, 4);
+        return shuffle(pool).slice(0, 4);
 
     }
 
