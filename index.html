@@ -1,1365 +1,405 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GN3XE33EZV"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-      gtag('config', 'G-GN3XE33EZV');
-    </script>
+    <title>Trailbrake Visuals | Motorsport Photography</title>
 
-    
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content="Trailbrake Visuals is a motorsport photography platform capturing racing, teams, drivers and the atmosphere surrounding the Nürburgring and beyond.">
 
-  <title>Trailbrake Visuals — Motorsport Photography</title>
-  <meta name="description" content="Trailbrake Visuals — Motorsport photography capturing racing, performance and the moments between.">
-  <meta name="theme-color" content="#080808">
+    <meta name="keywords"
+          content="Trailbrake Visuals, motorsport photography, Nürburgring photographer, NLS photography, racing photography, motorsport photographer">
 
-  <style>
-    :root {
-      --black: #080808;
-      --dark: #0d0d0d;
-      --panel: #111111;
-      --white: #f4f4f4;
-      --muted: #9b9b9b;
-      --red: #e3262e;
-      --border: rgba(255,255,255,0.09);
-    }
+    <meta name="author"
+          content="Milan Dekkers">
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta property="og:title"
+          content="Trailbrake Visuals | Motorsport Photography">
 
-    html {
-      scroll-behavior: smooth;
-    }
+    <meta property="og:description"
+          content="Motorsport photography by Milan Dekkers. Nürburgring and beyond.">
 
-    body {
-      background: var(--black);
-      color: var(--white);
-      font-family: Arial, Helvetica, sans-serif;
-      overflow-x: hidden;
-    }
+    <meta property="og:type"
+          content="website">
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    <meta property="og:image"
+          content="assets/trailbrake-logo.png">
 
-    img {
-      display: block;
-      max-width: 100%;
-    }
+    <link rel="icon"
+          href="assets/trailbrake-logo.png">
 
-    /* =========================
-       HEADER
-    ========================= */
-
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-      background: rgba(8,8,8,0.82);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav {
-      width: min(1200px, 92%);
-      margin: auto;
-      height: 82px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .logo {
-      width: 115px;
-      height: auto;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 34px;
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.8px;
-    }
-
-    .nav-links a {
-      position: relative;
-      color: #ddd;
-      transition: 0.25s;
-    }
-
-    .nav-links a:hover {
-      color: white;
-    }
-
-    .nav-links a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -8px;
-      width: 0;
-      height: 2px;
-      background: var(--red);
-      transition: 0.25s;
-    }
-
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-
-    .contact-button {
-      border: 1px solid rgba(227,38,46,0.7);
-      padding: 11px 17px;
-      color: white !important;
-    }
-
-    .contact-button:hover {
-      background: var(--red);
-    }
-
-    .contact-button::after {
-      display: none;
-    }
-
-    /* =========================
-       HERO
-    ========================= */
-
-    .hero {
-      min-height: 100vh;
-      position: relative;
-      display: flex;
-      align-items: flex-end;
-      overflow: hidden;
-      background:
-        linear-gradient(
-          90deg,
-          rgba(0,0,0,0.92) 0%,
-          rgba(0,0,0,0.6) 45%,
-          rgba(0,0,0,0.15) 100%
-        ),
-        #090909;
-    }
-
-    .hero-photo {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 1s ease;
-    }
-
-    .hero-photo.loaded {
-      opacity: 0.72;
-    }
-
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(
-          to top,
-          rgba(8,8,8,1) 0%,
-          rgba(8,8,8,0.55) 30%,
-          rgba(8,8,8,0.05) 70%
-        );
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      width: min(1200px, 92%);
-      margin: 0 auto;
-      padding: 150px 0 100px;
-    }
-
-    .eyebrow {
-      color: var(--red);
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 4px;
-      margin-bottom: 18px;
-    }
-
-    .hero h1 {
-      max-width: 850px;
-      font-size: clamp(48px, 8vw, 105px);
-      line-height: 0.9;
-      text-transform: uppercase;
-      letter-spacing: -4px;
-      font-weight: 900;
-    }
-
-    .hero h1 span {
-      color: var(--red);
-    }
-
-    .hero-text {
-      margin-top: 30px;
-      max-width: 540px;
-      color: #c6c6c6;
-      font-size: 16px;
-      line-height: 1.7;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 12px;
-      margin-top: 35px;
-      flex-wrap: wrap;
-    }
-
-    .button {
-      display: inline-block;
-      padding: 14px 22px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1.7px;
-      font-weight: 800;
-      border: 1px solid white;
-      transition: 0.25s;
-    }
-
-    .button.primary {
-      background: var(--red);
-      border-color: var(--red);
-    }
-
-    .button:hover {
-      transform: translateY(-2px);
-      background: white;
-      color: black;
-      border-color: white;
-    }
-
-    .hero-scroll {
-      position: absolute;
-      right: 4%;
-      bottom: 45px;
-      writing-mode: vertical-rl;
-      color: #888;
-      font-size: 9px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-
-    /* =========================
-       SECTION
-    ========================= */
-
-    section {
-      width: min(1200px, 92%);
-      margin: auto;
-      padding: 110px 0;
-    }
-
-    .section-heading {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 30px;
-      margin-bottom: 45px;
-    }
-
-    .section-kicker {
-      color: var(--red);
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      margin-bottom: 12px;
-    }
-
-    h2 {
-      font-size: clamp(36px, 6vw, 68px);
-      line-height: 0.95;
-      text-transform: uppercase;
-      letter-spacing: -2px;
-    }
-
-    .section-description {
-      max-width: 390px;
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 14px;
-    }
-
-    /* =========================
-       FEATURED GALLERY
-    ========================= */
-
-    .featured-grid {
-      display: grid;
-      grid-template-columns: 1.35fr 0.65fr;
-      grid-template-rows: 300px 300px;
-      gap: 10px;
-    }
-
-    .photo-card {
-      position: relative;
-      overflow: hidden;
-      background: #151515;
-      cursor: pointer;
-    }
-
-    .photo-card.large {
-      grid-row: span 2;
-    }
-
-    .photo-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.7s cubic-bezier(.2,.7,.2,1);
-    }
-
-    .photo-card:hover img {
-      transform: scale(1.055);
-    }
-
-    .photo-card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to top,
-        rgba(0,0,0,0.65),
-        transparent 50%
-      );
-      pointer-events: none;
-    }
-
-    .photo-label {
-      position: absolute;
-      left: 20px;
-      bottom: 18px;
-      z-index: 2;
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-weight: 800;
-    }
-
-    /* =========================
-       ALL PHOTOS
-    ========================= */
-
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .gallery .photo-card {
-      aspect-ratio: 4 / 3;
-    }
-
-    .gallery-empty {
-      padding: 50px;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      text-align: center;
-    }
-
-    /* =========================
-       ABOUT
-    ========================= */
-
-    .about {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 0.8fr 1.2fr;
-      gap: 80px;
-      align-items: center;
-    }
-
-    .about-logo {
-      width: min(280px, 70%);
-      margin: auto;
-      opacity: 0.95;
-    }
-
-    .about-copy h3 {
-      font-size: clamp(28px, 4vw, 48px);
-      text-transform: uppercase;
-      line-height: 1;
-      margin-bottom: 25px;
-    }
-
-    .about-copy h3 span {
-      color: var(--red);
-    }
-
-    .about-copy p {
-      color: #aaa;
-      line-height: 1.8;
-      font-size: 15px;
-      margin-bottom: 16px;
-    }
-
-    /* =========================
-       SERVICES
-    ========================= */
-
-    .services {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .service {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      padding: 35px 28px;
-      min-height: 250px;
-      position: relative;
-      transition: 0.3s;
-    }
-
-    .service:hover {
-      border-color: rgba(227,38,46,0.6);
-      transform: translateY(-4px);
-    }
-
-    .service-number {
-      color: var(--red);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      margin-bottom: 60px;
-    }
-
-    .service h3 {
-      text-transform: uppercase;
-      font-size: 22px;
-      margin-bottom: 14px;
-    }
-
-    .service p {
-      color: #999;
-      line-height: 1.65;
-      font-size: 13px;
-    }
-
-    /* =========================
-       CONTACT
-    ========================= */
-
-    .contact {
-      text-align: center;
-      padding-bottom: 120px;
-    }
-
-    .contact h2 {
-      max-width: 850px;
-      margin: auto;
-    }
-
-    .contact h2 span {
-      color: var(--red);
-    }
-
-    .contact-text {
-      max-width: 540px;
-      margin: 25px auto 35px;
-      color: #999;
-      line-height: 1.7;
-    }
-
-    .socials {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .social {
-      border: 1px solid var(--border);
-      padding: 13px 19px;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-weight: 800;
-      transition: 0.25s;
-    }
-
-    .social:hover {
-      background: white;
-      color: black;
-    }
-
-    /* =========================
-       FOOTER
-    ========================= */
-
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 30px 4%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      color: #666;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-    }
-
-    footer span {
-      color: var(--red);
-    }
-
-    /* =========================
-       LIGHTBOX
-    ========================= */
-
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      z-index: 2000;
-      background: rgba(0,0,0,0.96);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 30px;
-    }
-
-    .lightbox.active {
-      display: flex;
-    }
-
-    .lightbox img {
-      max-width: 95vw;
-      max-height: 90vh;
-      object-fit: contain;
-    }
-
-    .lightbox-close {
-      position: absolute;
-      top: 22px;
-      right: 25px;
-      width: 45px;
-      height: 45px;
-      border: 1px solid rgba(255,255,255,0.25);
-      background: transparent;
-      color: white;
-      font-size: 25px;
-      cursor: pointer;
-    }
-
-    .lightbox-close:hover {
-      background: white;
-      color: black;
-    }
-
-    /* =========================
-       MOBILE
-    ========================= */
-
-    @media (max-width: 800px) {
-
-      .nav {
-        height: 70px;
-      }
-
-      .logo {
-        width: 90px;
-      }
-
-      .nav-links {
-        gap: 15px;
-        font-size: 9px;
-        letter-spacing: 1px;
-      }
-
-      .nav-links a:nth-child(2),
-      .nav-links a:nth-child(3) {
-        display: none;
-      }
-
-      .contact-button {
-        padding: 9px 10px;
-      }
-
-      .hero-content {
-        padding-bottom: 75px;
-      }
-
-      .hero h1 {
-        letter-spacing: -2px;
-      }
-
-      .hero-scroll {
-        display: none;
-      }
-
-      section {
-        padding: 75px 0;
-      }
-
-      .section-heading {
-        display: block;
-      }
-
-      .section-description {
-        margin-top: 20px;
-      }
-
-      .featured-grid {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-      }
-
-      .photo-card.large {
-        grid-row: auto;
-      }
-
-      .featured-grid .photo-card {
-        aspect-ratio: 4 / 3;
-      }
-
-      .gallery {
-        grid-template-columns: 1fr 1fr;
-        gap: 6px;
-      }
-
-      .about-grid {
-        grid-template-columns: 1fr;
-        gap: 45px;
-      }
-
-      .about-logo {
-        width: 180px;
-      }
-
-      .services {
-        grid-template-columns: 1fr;
-      }
-
-      .service {
-        min-height: 210px;
-      }
-
-      footer {
-        flex-direction: column;
-        text-align: center;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .gallery {
-        grid-template-columns: 1fr;
-      }
-
-      .hero h1 {
-        font-size: 50px;
-      }
-
-      .hero-text {
-        font-size: 14px;
-      }
-    }
-  </style>
+    <link rel="stylesheet"
+          href="css/style.css">
 </head>
 
 <body>
 
-  <!-- =========================
-       HEADER
-  ========================= -->
+<div class="page-noise"></div>
 
-  <header>
-    <nav class="nav">
+<header class="site-header">
 
-      <a href="#top">
-        <img
-          src="assets/trailbrake-logo.png"
-          alt="Trailbrake Visuals"
-          class="logo"
-        >
-      </a>
+    <a href="index.html" class="brand">
+        <img src="assets/trailbrake-logo.png"
+             alt="Trailbrake Visuals logo">
+    </a>
 
-      <div class="nav-links">
-        <a href="#work">Work</a>
-        <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#contact" class="contact-button">Contact</a>
-      </div>
-
+    <nav class="desktop-nav">
+        <a href="index.html" class="active">HOME</a>
+        <a href="work.html">WORK</a>
+        <a href="events.html">EVENTS</a>
+        <a href="about.html">ABOUT</a>
+        <a href="services.html">SERVICES</a>
+        <a href="contact.html">CONTACT</a>
     </nav>
-  </header>
+
+    <button class="mobile-menu-button"
+            aria-label="Open navigation"
+            aria-expanded="false">
+        <span></span>
+        <span></span>
+    </button>
+
+</header>
+
+<div class="mobile-menu">
+
+    <a href="index.html">HOME</a>
+    <a href="work.html">WORK</a>
+    <a href="events.html">EVENTS</a>
+    <a href="about.html">ABOUT</a>
+    <a href="services.html">SERVICES</a>
+    <a href="contact.html">CONTACT</a>
+
+</div>
 
 
-  <!-- =========================
-       HERO
-  ========================= -->
+<main>
 
-  <main id="top">
+<section class="hero">
 
-    <section class="hero">
+    <div class="hero-background">
+        <div id="hero-image"></div>
+        <div class="hero-gradient"></div>
+    </div>
 
-      <img
-        id="heroPhoto"
-        class="hero-photo"
-        alt="Trailbrake Visuals motorsport photography"
-      >
-
-      <div class="hero-overlay"></div>
-
-      <div class="hero-content">
+    <div class="hero-content">
 
         <div class="eyebrow">
-          Motorsport Photography
+            TRAILBRAKE VISUALS
         </div>
 
         <h1>
-          Find the apex.<br>
-          Frame the <span>moment.</span>
+            Find the apex.<br>
+            <span>Frame the moment.</span>
         </h1>
 
-        <p class="hero-text">
-          Motorsport photography focused on speed, atmosphere and the
-          details that make racing unforgettable.
+        <p>
+            Motorsport photography focused on speed,
+            atmosphere and the moments that exist between
+            the start and the chequered flag.
         </p>
 
         <div class="hero-actions">
-          <a href="#work" class="button primary">
-            View the work
-          </a>
 
-          <a href="#contact" class="button">
-            Work with me
-          </a>
+            <a href="work.html"
+               class="button button-primary">
+                VIEW THE WORK
+            </a>
+
+            <a href="about.html"
+               class="button button-secondary">
+                ABOUT TRAILBRAKE
+            </a>
+
         </div>
 
-      </div>
+    </div>
 
-      <div class="hero-scroll">
-        Scroll to explore
-      </div>
+    <div class="hero-scroll">
+        <span>SCROLL</span>
+        <div></div>
+    </div>
 
-    </section>
+</section>
 
 
-    <!-- =========================
-         WORK
-    ========================= -->
+<section class="intro section">
 
-    <section id="work">
+    <div class="section-label">
+        01 / THE WORK
+    </div>
 
-      <div class="section-heading">
+    <div class="intro-grid">
 
         <div>
-          <div class="section-kicker">
-            NLS 8 & 9 — Nürburgring
-          </div>
-
-          <h2>
-            Race.<br>
-            Replayed.
-          </h2>
+            <h2>
+                Motorsport,<br>
+                <span>through the lens.</span>
+            </h2>
         </div>
 
-        <p class="section-description">
-          A selection from the latest NLS weekend.
-          Every frame captured trackside.
-        </p>
+        <div>
+            <p class="large-text">
+                Trailbrake Visuals is built around one simple idea:
+                capturing motorsport as it actually feels.
+            </p>
 
-      </div>
+            <p>
+                The cars, the drivers, the teams, the atmosphere,
+                the pressure and the split seconds that make racing
+                unforgettable.
+            </p>
 
-
-      <!-- Four random featured images -->
-
-      <div id="featuredGrid" class="featured-grid">
-        <div class="gallery-empty">
-          Loading photography...
+            <a href="work.html"
+               class="text-link">
+                Explore the work →
+            </a>
         </div>
-      </div>
+
+    </div>
+
+</section>
 
 
-      <!-- Complete collection -->
+<section class="featured section">
 
-      <div style="margin-top:90px;">
+    <div class="section-heading">
 
-        <div class="section-heading">
-
-          <div>
-            <div class="section-kicker">
-              The collection
+        <div>
+            <div class="section-label">
+                02 / FEATURED
             </div>
 
             <h2>
-              NLS 8 & 9
+                Selected<br>
+                <span>frames.</span>
             </h2>
-          </div>
-
-          <p class="section-description">
-            Explore the full collection from the weekend.
-          </p>
-
         </div>
 
-        <div id="gallery" class="gallery">
-          <div class="gallery-empty">
-            Loading photography...
-          </div>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         ABOUT
-    ========================= -->
-
-    <section id="about" class="about">
-
-      <div class="about-grid">
-
-        <div>
-          <img
-            src="assets/trailbrake-logo.png"
-            alt="Trailbrake Visuals logo"
-            class="about-logo"
-          >
-        </div>
-
-        <div class="about-copy">
-
-          <div class="section-kicker">
-            Behind the lens
-          </div>
-
-          <h3>
-            Racing is more than<br>
-            <span>just the finish.</span>
-          </h3>
-
-          <p>
-            Trailbrake Visuals is an independent motorsport photography
-            project focused on capturing racing as it happens.
-          </p>
-
-          <p>
-            From the intensity of a packed grid to the small details
-            that disappear in a split second, the goal is simple:
-            create images that make you feel like you were there.
-          </p>
-
-          <p>
-            Currently shooting trackside across events including the
-            Nürburgring Nordschleife and the Nürburgring Langstrecken-Serie.
-          </p>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         SERVICES
-    ========================= -->
-
-    <section id="services">
-
-      <div class="section-heading">
-
-        <div>
-          <div class="section-kicker">
-            What I do
-          </div>
-
-          <h2>
-            Built for<br>
-            <span style="color:#e3262e;">speed.</span>
-          </h2>
-        </div>
-
-        <p class="section-description">
-          Photography and visual content for teams, drivers,
-          automotive brands and motorsport enthusiasts.
-        </p>
-
-      </div>
-
-
-      <div class="services">
-
-        <article class="service">
-
-          <div class="service-number">
-            01 / Race Weekends
-          </div>
-
-          <h3>
-            Motorsport
-          </h3>
-
-          <p>
-            Trackside photography covering race weekends,
-            testing, qualifying and competition.
-          </p>
-
-        </article>
-
-
-        <article class="service">
-
-          <div class="service-number">
-            02 / Automotive
-          </div>
-
-          <h3>
-            Automotive
-          </h3>
-
-          <p>
-            Dynamic automotive photography for cars,
-            owners, brands and automotive projects.
-          </p>
-
-        </article>
-
-
-        <article class="service">
-
-          <div class="service-number">
-            03 / Social Content
-          </div>
-
-          <h3>
-            Visual Content
-          </h3>
-
-          <p>
-            High-impact imagery created for Instagram,
-            TikTok, websites and promotional campaigns.
-          </p>
-
-        </article>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         CONTACT
-    ========================= -->
-
-    <section id="contact" class="contact">
-
-      <div class="section-kicker">
-        Let's work together
-      </div>
-
-      <h2>
-        Have a car worth<br>
-        <span>capturing?</span>
-      </h2>
-
-      <p class="contact-text">
-        For photography enquiries, collaborations, race weekends
-        or automotive projects, get in touch.
-      </p>
-
-      <div class="hero-actions" style="justify-content:center;">
-
-        <a
-          href="mailto:milandekkersbusiness@gmail.com"
-          class="button primary"
-        >
-          Email me
+        <a href="work.html"
+           class="text-link">
+            View all work →
         </a>
 
-      </div>
-
-
-      <div class="socials" style="margin-top:25px;">
-
-        <a
-          href="https://www.instagram.com/trailbrakevisuals"
-          target="_blank"
-          rel="noopener"
-          class="social"
-        >
-          Instagram
-        </a>
-
-        <a
-          href="https://www.tiktok.com/@trailbrakevisuals"
-          target="_blank"
-          rel="noopener"
-          class="social"
-        >
-          TikTok
-        </a>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <!-- =========================
-       FOOTER
-  ========================= -->
-
-  <footer>
-
-    <div>
-      © 2026 Trailbrake Visuals
     </div>
 
-    <div>
-      <span>Find the apex.</span> Frame the moment.
+    <div id="featured-grid"
+         class="featured-grid">
+
+        <div class="loading-state">
+            Loading selected frames...
+        </div>
+
     </div>
 
-  </footer>
+</section>
 
 
-  <!-- =========================
-       LIGHTBOX
-  ========================= -->
+<section class="event-preview section">
 
-  <div id="lightbox" class="lightbox">
+    <div class="section-label">
+        03 / EVENTS
+    </div>
 
-    <button
-      id="lightboxClose"
-      class="lightbox-close"
-      aria-label="Close image"
-    >
-      ×
-    </button>
+    <div class="event-card">
 
-    <img id="lightboxImage" alt="Trailbrake Visuals photograph">
+        <div class="event-card-background"></div>
 
-  </div>
+        <div class="event-card-content">
 
+            <span class="event-number">
+                CURRENT COLLECTION
+            </span>
 
-  <!-- =========================
-       JAVASCRIPT
-  ========================= -->
+            <h2>
+                NLS 8 & 9
+            </h2>
 
-  <script>
+            <p>
+                Nürburgring Nordschleife<br>
+                September 2026
+            </p>
 
-    const REPO =
-      "trailbrakevisuals/trailbrakevisuals.github.io";
+            <a href="events.html"
+               class="button button-primary">
+                EXPLORE EVENT
+            </a>
 
-    const BRANCH = "main";
+        </div>
 
-    const PHOTO_FOLDER = "assets/photos";
+    </div>
 
-    const API_URL =
-      `https://api.github.com/repos/${REPO}/contents/${PHOTO_FOLDER}?ref=${BRANCH}`;
+</section>
 
-    const RAW_BASE =
-      `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${PHOTO_FOLDER}/`;
 
+<section class="about-preview section">
 
-    /*
-      Randomise an array using Fisher-Yates.
-    */
+    <div class="about-preview-grid">
 
-    function shuffle(array) {
+        <div class="about-preview-image">
+            <div id="about-preview-photo"></div>
+        </div>
 
-      const result = [...array];
+        <div class="about-preview-content">
 
-      for (let i = result.length - 1; i > 0; i--) {
+            <div class="section-label">
+                04 / BEHIND THE LENS
+            </div>
 
-        const j = Math.floor(Math.random() * (i + 1));
+            <h2>
+                The person<br>
+                behind the <span>camera.</span>
+            </h2>
 
-        [result[i], result[j]] =
-          [result[j], result[i]];
+            <p>
+                I'm Milan, the photographer behind Trailbrake Visuals.
+            </p>
 
-      }
+            <p>
+                Motorsport has always been more than just cars to me.
+                It is the noise, atmosphere, people, pressure and
+                those split seconds that make a race unforgettable.
+            </p>
 
-      return result;
-    }
+            <a href="about.html"
+               class="text-link">
+                Read the story →
+            </a>
 
+        </div>
 
-    /*
-      Create a photo card.
-    */
+    </div>
 
-    function createPhotoCard(url, index, large = false) {
+</section>
 
-      const card =
-        document.createElement("div");
 
-      card.className =
-        "photo-card" +
-        (large ? " large" : "");
+<section class="services-preview section">
 
-      const img =
-        document.createElement("img");
+    <div class="section-heading">
 
-      img.src = url;
+        <div>
 
-      img.alt =
-        `Trailbrake Visuals motorsport photograph ${index + 1}`;
+            <div class="section-label">
+                05 / SERVICES
+            </div>
 
-      img.loading =
-        index < 4 ? "eager" : "lazy";
+            <h2>
+                Photography<br>
+                <span>for motorsport.</span>
+            </h2>
 
-      const label =
-        document.createElement("div");
+        </div>
 
-      label.className =
-        "photo-label";
+        <a href="services.html"
+           class="text-link">
+            View services →
+        </a>
 
-      label.textContent =
-        "NLS 8 & 9 / Nürburgring";
+    </div>
 
-      card.appendChild(img);
+    <div class="service-mini-grid">
 
-      card.appendChild(label);
+        <div class="service-mini">
+            <span>01</span>
+            <h3>Team Photography</h3>
+        </div>
 
-      card.addEventListener("click", () => {
+        <div class="service-mini">
+            <span>02</span>
+            <h3>Driver Photography</h3>
+        </div>
 
-        openLightbox(url);
+        <div class="service-mini">
+            <span>03</span>
+            <h3>Race Coverage</h3>
+        </div>
 
-      });
+        <div class="service-mini">
+            <span>04</span>
+            <h3>Social Media Content</h3>
+        </div>
 
-      return card;
+    </div>
 
-    }
+</section>
 
 
-    /*
-      Load the complete photo collection
-      directly from the GitHub repository.
-    */
+<section class="cta section">
 
-    async function loadPhotos() {
+    <div class="cta-inner">
 
-      try {
+        <div class="section-label">
+            HAVE A PROJECT?
+        </div>
 
-        const response =
-          await fetch(API_URL);
+        <h2>
+            Let's capture<br>
+            <span>your next race.</span>
+        </h2>
 
-        if (!response.ok) {
-          throw new Error("Could not load photos.");
-        }
+        <a href="contact.html"
+           class="button button-primary">
+            GET IN TOUCH
+        </a>
 
-        const files =
-          await response.json();
+    </div>
 
+</section>
 
-        const photos =
-          files
+</main>
 
-            .filter(file =>
-              file.type === "file" &&
-              /\.(jpe?g|png|webp)$/i.test(file.name)
-            )
 
-            .map(file =>
-              RAW_BASE +
-              encodeURIComponent(file.name)
-            );
+<footer class="site-footer">
 
+    <div class="footer-top">
 
-        if (!photos.length) {
-          throw new Error("No photographs found.");
-        }
+        <div>
 
+            <img src="assets/trailbrake-logo.png"
+                 alt="Trailbrake Visuals"
+                 class="footer-logo">
 
-        /*
-          Randomise the collection every time
-          the website is opened.
-        */
+            <p>
+                Motorsport photography.<br>
+                Nürburgring and beyond.
+            </p>
 
-        const shuffled =
-          shuffle(photos);
+        </div>
 
+        <div class="footer-links">
 
-        /*
-          HERO
-        */
+            <a href="work.html">Work</a>
+            <a href="events.html">Events</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="contact.html">Contact</a>
 
-        const hero =
-          document.getElementById("heroPhoto");
+        </div>
 
-        hero.src =
-          shuffled[0];
+    </div>
 
-        hero.onload = () => {
-          hero.classList.add("loaded");
-        };
+    <div class="footer-bottom">
 
+        <span>
+            © <span id="year"></span> Trailbrake Visuals
+        </span>
 
-        /*
-          FEATURED
-        */
+        <span>
+            Milan Dekkers
+        </span>
 
-        const featured =
-          document.getElementById("featuredGrid");
+    </div>
 
-        featured.innerHTML = "";
+</footer>
 
 
-        const featuredPhotos =
-          shuffled.slice(1, 5);
-
-
-        featuredPhotos.forEach((photo, index) => {
-
-          featured.appendChild(
-            createPhotoCard(
-              photo,
-              index,
-              index === 0
-            )
-          );
-
-        });
-
-
-        /*
-          COMPLETE GALLERY
-        */
-
-        const gallery =
-          document.getElementById("gallery");
-
-        gallery.innerHTML = "";
-
-
-        shuffled.forEach((photo, index) => {
-
-          gallery.appendChild(
-            createPhotoCard(
-              photo,
-              index
-            )
-          );
-
-        });
-
-      }
-
-      catch (error) {
-
-        console.error(error);
-
-        document.getElementById("featuredGrid").innerHTML =
-          `<div class="gallery-empty">
-            Photography could not be loaded right now.
-          </div>`;
-
-        document.getElementById("gallery").innerHTML =
-          `<div class="gallery-empty">
-            Please refresh the page.
-          </div>`;
-
-      }
-
-    }
-
-
-    /*
-      LIGHTBOX
-    */
-
-    const lightbox =
-      document.getElementById("lightbox");
-
-    const lightboxImage =
-      document.getElementById("lightboxImage");
-
-    const lightboxClose =
-      document.getElementById("lightboxClose");
-
-
-    function openLightbox(url) {
-
-      lightboxImage.src = url;
-
-      lightbox.classList.add("active");
-
-      document.body.style.overflow =
-        "hidden";
-
-    }
-
-
-    function closeLightbox() {
-
-      lightbox.classList.remove("active");
-
-      document.body.style.overflow =
-        "";
-
-      lightboxImage.src = "";
-
-    }
-
-
-    lightboxClose.addEventListener(
-      "click",
-      closeLightbox
-    );
-
-
-    lightbox.addEventListener(
-      "click",
-      event => {
-
-        if (event.target === lightbox) {
-          closeLightbox();
-        }
-
-      }
-    );
-
-
-    document.addEventListener(
-      "keydown",
-      event => {
-
-        if (event.key === "Escape") {
-          closeLightbox();
-        }
-
-      }
-    );
-
-
-    /*
-      Start.
-    */
-
-    loadPhotos();
-
-  </script>
+<script src="js/metadata.js"></script>
+<script src="js/viewer.js"></script>
+<script src="js/gallery.js"></script>
 
 </body>
 </html>
