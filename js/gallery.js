@@ -44,6 +44,18 @@
                         );
 
                     })
+                    .sort((a, b) => {
+
+                        return a.name.localeCompare(
+                            b.name,
+                            undefined,
+                            {
+                                numeric: true,
+                                sensitivity: "base"
+                            }
+                        );
+
+                    })
                     .map(file => {
 
                         const data =
@@ -51,11 +63,14 @@
 
                         return {
 
-                            filename: file.name,
+                            filename:
+                                file.name,
 
                             src:
                                 PHOTO_BASE +
-                                encodeURIComponent(file.name),
+                                encodeURIComponent(
+                                    file.name
+                                ),
 
                             title:
                                 data.title ||
@@ -78,7 +93,8 @@
                                 data.className || "",
 
                             event:
-                                data.event || "NLS8&9",
+                                data.event ||
+                                "NLS8&9",
 
                             quality:
                                 typeof data.quality === "number"
@@ -115,7 +131,9 @@
     function getFeaturedPhotos(photos) {
 
         const manual =
-            photos.filter(photo => photo.featured);
+            photos.filter(
+                photo => photo.featured
+            );
 
         if (manual.length >= 4) {
 
@@ -145,7 +163,10 @@
                 "hero-image"
             );
 
-        if (!container || !photos.length) {
+        if (
+            !container ||
+            !photos.length
+        ) {
             return;
         }
 
@@ -161,13 +182,18 @@
         const image =
             document.createElement("img");
 
-        image.src = selected.src;
+        image.src =
+            selected.src;
 
-        image.alt = selected.alt;
+        image.alt =
+            selected.alt;
 
-        image.loading = "eager";
+        image.loading =
+            "eager";
 
-        container.appendChild(image);
+        container.appendChild(
+            image
+        );
 
     }
 
@@ -196,13 +222,17 @@
             (photo, index) => {
 
                 const item =
-                    document.createElement("article");
+                    document.createElement(
+                        "article"
+                    );
 
                 item.className =
                     "featured-item";
 
                 const image =
-                    document.createElement("img");
+                    document.createElement(
+                        "img"
+                    );
 
                 image.src =
                     photo.src;
@@ -217,25 +247,30 @@
 
 
                 const overlay =
-                    document.createElement("div");
+                    document.createElement(
+                        "div"
+                    );
 
                 overlay.className =
                     "featured-overlay";
 
 
                 const label =
-                    document.createElement("div");
+                    document.createElement(
+                        "div"
+                    );
 
                 label.className =
                     "featured-label";
 
                 label.textContent =
-                    photo.event ||
-                    "MOTORSPORT";
+                    "NLS 8 & 9";
 
 
                 const title =
-                    document.createElement("div");
+                    document.createElement(
+                        "div"
+                    );
 
                 title.className =
                     "featured-title";
@@ -245,13 +280,21 @@
                     "Selected frame";
 
 
-                overlay.appendChild(label);
+                overlay.appendChild(
+                    label
+                );
 
-                overlay.appendChild(title);
+                overlay.appendChild(
+                    title
+                );
 
-                item.appendChild(image);
+                item.appendChild(
+                    image
+                );
 
-                item.appendChild(overlay);
+                item.appendChild(
+                    overlay
+                );
 
 
                 item.addEventListener(
@@ -272,7 +315,9 @@
                 );
 
 
-                container.appendChild(item);
+                container.appendChild(
+                    item
+                );
 
             }
         );
@@ -301,14 +346,18 @@
             photo => {
 
                 const item =
-                    document.createElement("article");
+                    document.createElement(
+                        "article"
+                    );
 
                 item.className =
                     "gallery-item";
 
 
                 const image =
-                    document.createElement("img");
+                    document.createElement(
+                        "img"
+                    );
 
                 image.src =
                     photo.src;
@@ -321,14 +370,18 @@
 
 
                 const info =
-                    document.createElement("div");
+                    document.createElement(
+                        "div"
+                    );
 
                 info.className =
                     "gallery-item-info";
 
 
                 const title =
-                    document.createElement("strong");
+                    document.createElement(
+                        "strong"
+                    );
 
                 title.textContent =
                     photo.title ||
@@ -336,33 +389,43 @@
 
 
                 const details =
-                    document.createElement("span");
+                    document.createElement(
+                        "span"
+                    );
 
                 const detailParts = [];
 
 
                 if (photo.number) {
+
                     detailParts.push(
                         `#${photo.number}`
                     );
+
                 }
 
                 if (photo.team) {
+
                     detailParts.push(
                         photo.team
                     );
+
                 }
 
                 if (photo.car) {
+
                     detailParts.push(
                         photo.car
                     );
+
                 }
 
                 if (photo.event) {
+
                     detailParts.push(
                         photo.event
                     );
+
                 }
 
 
@@ -372,13 +435,21 @@
                     );
 
 
-                info.appendChild(title);
+                info.appendChild(
+                    title
+                );
 
-                info.appendChild(details);
+                info.appendChild(
+                    details
+                );
 
-                item.appendChild(image);
+                item.appendChild(
+                    image
+                );
 
-                item.appendChild(info);
+                item.appendChild(
+                    info
+                );
 
 
                 item.addEventListener(
@@ -399,7 +470,9 @@
                 );
 
 
-                container.appendChild(item);
+                container.appendChild(
+                    item
+                );
 
             }
         );
@@ -418,7 +491,10 @@
                 "about-preview-photo"
             );
 
-        if (!container || !photos.length) {
+        if (
+            !container ||
+            !photos.length
+        ) {
             return;
         }
 
@@ -429,7 +505,9 @@
         container.innerHTML = "";
 
         const image =
-            document.createElement("img");
+            document.createElement(
+                "img"
+            );
 
         image.src =
             selected.src;
@@ -440,7 +518,9 @@
         image.loading =
             "lazy";
 
-        container.appendChild(image);
+        container.appendChild(
+            image
+        );
 
     }
 
@@ -456,7 +536,10 @@
                 ".event-card-background"
             );
 
-        if (!container || !photos.length) {
+        if (
+            !container ||
+            !photos.length
+        ) {
             return;
         }
 
@@ -467,7 +550,9 @@
         container.innerHTML = "";
 
         const image =
-            document.createElement("img");
+            document.createElement(
+                "img"
+            );
 
         image.src =
             selected.src;
@@ -478,7 +563,9 @@
         image.loading =
             "lazy";
 
-        container.appendChild(image);
+        container.appendChild(
+            image
+        );
 
     }
 
@@ -617,29 +704,31 @@
         if (menu) {
 
             menu.querySelectorAll("a")
-                .forEach(link => {
+                .forEach(
+                    link => {
 
-                    link.addEventListener(
-                        "click",
-                        function () {
+                        link.addEventListener(
+                            "click",
+                            function () {
 
-                            header.classList.remove(
-                                "mobile-open"
-                            );
+                                header.classList.remove(
+                                    "mobile-open"
+                                );
 
-                            menu.classList.remove(
-                                "open"
-                            );
+                                menu.classList.remove(
+                                    "open"
+                                );
 
-                            button.setAttribute(
-                                "aria-expanded",
-                                "false"
-                            );
+                                button.setAttribute(
+                                    "aria-expanded",
+                                    "false"
+                                );
 
-                        }
-                    );
+                            }
+                        );
 
-                });
+                    }
+                );
 
         }
 
