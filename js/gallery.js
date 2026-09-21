@@ -1,12 +1,43 @@
 (function () {
 
-    const REPO_API =
-        "https://api.github.com/repos/trailbrakevisuals/trailbrakevisuals.github.io/contents/assets/photos?ref=main";
+    /*
+     * =====================================================
+     * PHOTO COLLECTIONS
+     * =====================================================
+     */
 
-    const PHOTO_BASE =
-        "https://trailbrakevisuals.github.io/assets/photos/";
+    const PHOTO_COLLECTIONS = [
 
-    const metadata =
+        {
+            event: "NLS8&9",
+
+            api:
+                "https://api.github.com/repos/trailbrakevisuals/trailbrakevisuals.github.io/contents/assets/photos?ref=main",
+
+            base:
+                "https://trailbrakevisuals.github.io/assets/photos/",
+
+            metadata:
+                "https://api.github.com/repos/trailbrakevisuals/trailbrakevisuals.github.io/contents/assets/photos/metadata.json?ref=main"
+        },
+
+        {
+            event: "Ultimate cup series EU",
+
+            api:
+                "https://api.github.com/repos/trailbrakevisuals/trailbrakevisuals.github.io/contents/assets/ultimate-cup-series-eu?ref=main",
+
+            base:
+                "https://trailbrakevisuals.github.io/assets/ultimate-cup-series-eu/",
+
+            metadata:
+                "https://api.github.com/repos/trailbrakevisuals/trailbrakevisuals.github.io/contents/assets/ultimate-cup-series-eu/metadata.json?ref=main"
+        }
+
+    ];
+
+
+    const globalMetadata =
         window.TrailbrakeMetadata || {
             photos: {}
         };
@@ -14,16 +45,60 @@
 
     /*
      * =====================================================
-     * LOAD PHOTOS
+     * LOAD EVENT METADATA
      * =====================================================
      */
 
-    async function loadPhotos() {
+    async function loadEventMetadata(collection) {
 
         try {
 
             const response =
-                await fetch(REPO_API);
+                await fetch(collection.metadata);
+
+            if (!response.ok) {
+
+                return {
+                    photos: {}
+                };
+
+            }
+
+            const data =
+                await response.json();
+
+            return data || {
+                photos: {}
+            };
+
+        } catch (error) {
+
+            console.warn(
+                "Unable to load metadata for:",
+                collection.event
+            );
+
+            return {
+                photos: {}
+            };
+
+        }
+
+    }
+
+
+    /*
+     * =====================================================
+     * LOAD ONE PHOTO COLLECTION
+     * =====================================================
+     */
+
+    async function loadCollection(collection) {
+
+        try {
+
+            const response =
+                await fetch(collection.api);
 
             if (!response.ok) {
 
@@ -35,6 +110,12 @@
 
             const files =
                 await response.json();
+
+
+            const eventMetadata =
+                await loadEventMetadata(
+                    collection
+                );
 
 
             const photos =
@@ -53,8 +134,7 @@
 
 
                     /*
-                     * Keep the Work page in a
-                     * predictable natural order.
+                     * Keep natural filename order.
                      */
 
                     .sort(function (a, b) {
@@ -73,8 +153,24 @@
 
                     .map(function (file) {
 
-                        const data =
-                            metadata.photos[file.name] || {};
+                        const globalData =
+                            globalMetadata.photos &&
+                            globalMetadata.photos[file.name]
+                                ? globalMetadata.photos[file.name]
+                                : {};
+
+
+                        const eventData =
+                            eventMetadata.photos &&
+                            eventMetadata.photos[file.name]
+                                ? eventMetadata.photos[file.name]
+                                : {};
+
+
+                        const data = {
+                            ...globalData,
+                            ...eventData
+                        };
 
 
                         return {
@@ -83,7 +179,7 @@
                                 file.name,
 
                             src:
-                                PHOTO_BASE +
+                                collection.base +
                                 encodeURIComponent(
                                     file.name
                                 ),
@@ -97,20 +193,24 @@
                                 "Motorsport photography by Trailbrake Visuals",
 
                             number:
-                                data.number || "",
+                                data.number ||
+                                "",
 
                             team:
-                                data.team || "",
+                                data.team ||
+                                "",
 
                             car:
-                                data.car || "",
+                                data.car ||
+                                "",
 
                             className:
-                                data.className || "",
+                                data.className ||
+                                "",
 
                             event:
                                 data.event ||
-                                "NLS8&9",
+                                collection.event,
 
                             quality:
                                 typeof data.quality === "number"
@@ -132,12 +232,34 @@
 
             console.error(
                 "Trailbrake photo loading error:",
+                collection.event,
                 error
             );
 
             return [];
 
         }
+
+    }
+
+
+    /*
+     * =====================================================
+     * LOAD ALL PHOTO COLLECTIONS
+     * =====================================================
+     */
+
+    async function loadPhotos() {
+
+        const collections =
+            await Promise.all(
+                PHOTO_COLLECTIONS.map(
+                    loadCollection
+                )
+            );
+
+
+        return collections.flat();
 
     }
 
@@ -186,19 +308,21 @@
      * =====================================================
      * GET FEATURED PHOTOS
      *
-     * The selected four photos are stored in memory
-     * for the current page load.
+     * The selected four photos are stored for
+     * the current page load.
      *
-     * The previous selection is stored in localStorage
-     * so a reload avoids immediately showing the same
-     * four photographs again.
+     * The previous selection is stored in
+     * localStorage so a reload avoids immediately
+     * showing the same four photographs again.
      * =====================================================
      */
 
     function getFeaturedPhotos(photos) {
 
         if (!photos.length) {
+
             return [];
+
         }
 
 
@@ -241,14 +365,16 @@
 
 
         /*
-         * First try to completely avoid the
-         * previous homepage selection.
+         * First try to completely avoid
+         * the previous homepage selection.
          */
 
         let fresh =
             pool.filter(function (photo) {
 
                 return !previousSet.has(
+                    photo.event +
+                    "::" +
                     photo.filename
                 );
 
@@ -256,8 +382,8 @@
 
 
         /*
-         * If there are at least four unused
-         * photographs, use only those.
+         * If at least four unused photographs
+         * remain, use only those.
          */
 
         if (fresh.length >= 4) {
@@ -284,7 +410,11 @@
                 new Set(
                     fresh.map(function (photo) {
 
-                        return photo.filename;
+                        return (
+                            photo.event +
+                            "::" +
+                            photo.filename
+                        );
 
                     })
                 );
@@ -294,6 +424,8 @@
                 pool.filter(function (photo) {
 
                     return !usedNow.has(
+                        photo.event +
+                        "::" +
                         photo.filename
                     );
 
@@ -323,7 +455,11 @@
                 JSON.stringify(
                     selected.map(function (photo) {
 
-                        return photo.filename;
+                        return (
+                            photo.event +
+                            "::" +
+                            photo.filename
+                        );
 
                     })
                 )
@@ -471,7 +607,7 @@
 
 
                 label.textContent =
-                    "NLS 8 & 9";
+                    photo.event;
 
 
                 const title =
@@ -616,7 +752,8 @@
                     );
 
 
-                const detailParts = [];
+                const detailParts =
+                    [];
 
 
                 if (photo.number) {
@@ -1058,9 +1195,9 @@
         /*
          * Select the homepage set ONCE.
          *
-         * Everything on the homepage that uses
-         * featured photography can now reference
-         * this same selection.
+         * This same selection is used for
+         * hero, featured grid, About preview
+         * and event preview.
          */
 
         const featuredPhotos =
@@ -1071,8 +1208,6 @@
 
         /*
          * HERO
-         *
-         * First selected photograph.
          */
 
         renderHero(
@@ -1083,8 +1218,6 @@
 
         /*
          * FEATURED GRID
-         *
-         * Same four selected photographs.
          */
 
         renderFeatured(
@@ -1094,8 +1227,6 @@
 
         /*
          * WORK PAGE
-         *
-         * Original natural order.
          */
 
         renderGallery(
@@ -1105,9 +1236,6 @@
 
         /*
          * ABOUT PREVIEW
-         *
-         * Use another photograph from the
-         * current featured selection.
          */
 
         renderAboutPhoto(
@@ -1119,9 +1247,6 @@
 
         /*
          * EVENT PREVIEW
-         *
-         * Use another photograph from the
-         * current featured selection.
          */
 
         renderEventImage(
@@ -1130,6 +1255,10 @@
             photos[0]
         );
 
+
+        /*
+         * FILTERS
+         */
 
         setupFilters(
             photos
