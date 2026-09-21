@@ -25,10 +25,10 @@
             event: "Ultimate cup series EU",
 
             api:
-                "https://api.github.com/repos/trailbrakevisuals/trailbrakevisuals.github.io/contents/assets/ultimate-cup-series-eu?ref=main",
+                "https://api.github.com/repos/trailbrakevisuals/trailbrakevisuals.github.io/contents/assets/ultimate-cup-series-eu/photos?ref=main",
 
             base:
-                "https://trailbrakevisuals.github.io/assets/ultimate-cup-series-eu/",
+                "https://trailbrakevisuals.github.io/assets/ultimate-cup-series-eu/photos/",
 
             metadata:
                 "https://api.github.com/repos/trailbrakevisuals/trailbrakevisuals.github.io/contents/assets/ultimate-cup-series-eu/metadata.json?ref=main"
