@@ -1177,11 +1177,26 @@
         setYear();
 
 
-        const photos =
-            await loadPhotos();
+        const allPhotos =
+    await loadPhotos();
 
 
-        if (!photos.length) {
+const pageEvent =
+    document.body.dataset.event ||
+    "";
+
+
+const photos =
+    pageEvent
+        ? allPhotos.filter(function (photo) {
+
+            return photo.event === pageEvent;
+
+        })
+        : allPhotos;
+
+
+if (!photos.length) {
 
             console.warn(
                 "No Trailbrake photos found."
